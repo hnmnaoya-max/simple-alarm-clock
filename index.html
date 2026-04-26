@@ -3,25 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Simple Alarm</title>
+  <title>Aurora Alarm</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:wght@200;300;400&display=swap"
+    rel="stylesheet"
+  />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="container">
-    <h1 class="title">Alarm</h1>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
 
-    <div class="clock" id="clock">--:--:--</div>
+  <main class="card">
+    <header class="card-header">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        <span class="brand-name">AURORA</span>
+      </div>
+      <div class="date" id="date">—</div>
+    </header>
 
-    <div class="alarm-input">
-      <input type="time" id="alarmTime" />
-    </div>
+    <section class="clock-wrap">
+      <div class="clock" id="clock">
+        <span class="hh">--</span><span class="sep">:</span><span class="mm">--</span><span class="ss" id="seconds">--</span>
+      </div>
+      <div class="meridiem" id="meridiem">—</div>
+    </section>
 
-    <div class="buttons">
-      <button id="setBtn" class="btn primary">セット</button>
-      <button id="clearBtn" class="btn secondary">解除</button>
-    </div>
+    <section class="alarm-section">
+      <label class="field-label" for="alarmTime">ALARM TIME</label>
+      <div class="time-input-wrap">
+        <input type="time" id="alarmTime" />
+      </div>
 
-    <p class="status" id="status">アラーム未設定</p>
+      <div class="buttons">
+        <button id="setBtn" class="btn primary">
+          <span class="btn-label">セット</span>
+        </button>
+        <button id="clearBtn" class="btn ghost">
+          <span class="btn-label">解除</span>
+        </button>
+      </div>
+    </section>
+
+    <footer class="status-wrap">
+      <span class="status-pill" id="status">
+        <span class="status-led"></span>
+        <span class="status-text">アラーム未設定</span>
+      </span>
+    </footer>
   </main>
 
   <script src="app.js"></script>
