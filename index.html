@@ -19,67 +19,147 @@
   <div class="bg-orb orb-3"></div>
   <div class="bg-grain"></div>
 
-  <main class="card">
-    <header class="card-header">
-      <div class="brand">
-        <span class="brand-dot"></span>
-        <span class="brand-name">AURORA</span>
-      </div>
-      <div class="date" id="date">—</div>
-    </header>
-
-    <section class="clock-wrap">
-      <div class="clock" id="clock">
-        <span class="hh">--</span><span class="sep">:</span><span class="mm">--</span>
-      </div>
-      <div class="sub-row">
-        <div class="seconds-ring" aria-hidden="true">
-          <svg viewBox="0 0 36 36">
-            <circle class="ring-bg" cx="18" cy="18" r="16"></circle>
-            <circle class="ring-fg" cx="18" cy="18" r="16" id="secondsRing"></circle>
-          </svg>
-          <span class="seconds-text" id="seconds">--</span>
+  <div class="stage">
+    <main class="card">
+      <header class="card-header">
+        <div class="brand">
+          <span class="brand-dot"></span>
+          <span class="brand-name">AURORA</span>
         </div>
-        <div class="meridiem" id="meridiem">—</div>
+        <div class="date" id="date">—</div>
+      </header>
+
+      <section class="clock-wrap">
+        <div class="clock" id="clock">
+          <span class="hh">--</span><span class="sep">:</span><span class="mm">--</span>
+        </div>
+        <div class="sub-row">
+          <div class="seconds-ring" aria-hidden="true">
+            <svg viewBox="0 0 36 36">
+              <circle class="ring-bg" cx="18" cy="18" r="16"></circle>
+              <circle class="ring-fg" cx="18" cy="18" r="16" id="secondsRing"></circle>
+            </svg>
+            <span class="seconds-text" id="seconds">--</span>
+          </div>
+          <div class="meridiem" id="meridiem">—</div>
+        </div>
+      </section>
+
+      <section class="alarm-section">
+        <label class="field-label" for="alarmTime">
+          <span>ALARM TIME</span>
+          <span class="countdown" id="countdown"></span>
+        </label>
+        <div class="time-input-wrap">
+          <input type="time" id="alarmTime" />
+        </div>
+
+        <div class="buttons" id="defaultButtons">
+          <button id="setBtn" class="btn primary">
+            <span class="btn-label">セット</span>
+          </button>
+          <button id="clearBtn" class="btn ghost">
+            <span class="btn-label">解除</span>
+          </button>
+        </div>
+
+        <div class="buttons ringing-buttons" id="ringingButtons" hidden>
+          <button id="snoozeBtn" class="btn snooze">
+            <span class="btn-label">スヌーズ 5分</span>
+          </button>
+          <button id="stopBtn" class="btn stop">
+            <span class="btn-label">停止</span>
+          </button>
+        </div>
+      </section>
+
+      <footer class="status-wrap">
+        <span class="status-pill" id="status">
+          <span class="status-led"></span>
+          <span class="status-text">アラーム未設定</span>
+        </span>
+      </footer>
+    </main>
+
+    <!-- Auth / History panel -->
+    <aside class="panel" id="authPanel">
+      <!-- ログアウト時 -->
+      <div class="panel-section" id="loggedOutView">
+        <div class="panel-header">
+          <span class="panel-title">アカウント</span>
+          <span class="panel-sub">ログインで履歴を保存</span>
+        </div>
+
+        <form class="auth-form" id="authForm" autocomplete="on">
+          <input
+            type="email"
+            id="email"
+            placeholder="email@example.com"
+            autocomplete="email"
+            required
+          />
+          <input
+            type="password"
+            id="password"
+            placeholder="パスワード（6文字以上）"
+            autocomplete="current-password"
+            minlength="6"
+            required
+          />
+          <div class="auth-buttons">
+            <button type="submit" class="btn primary" id="signInBtn">
+              <span class="btn-label">ログイン</span>
+            </button>
+            <button type="button" class="btn ghost" id="signUpBtn">
+              <span class="btn-label">新規登録</span>
+            </button>
+          </div>
+          <p class="auth-msg" id="authMsg"></p>
+        </form>
       </div>
-    </section>
 
-    <section class="alarm-section">
-      <label class="field-label" for="alarmTime">
-        <span>ALARM TIME</span>
-        <span class="countdown" id="countdown"></span>
-      </label>
-      <div class="time-input-wrap">
-        <input type="time" id="alarmTime" />
+      <!-- ログイン中 -->
+      <div class="panel-section" id="loggedInView" hidden>
+        <div class="panel-header">
+          <div class="user-info">
+            <span class="user-avatar" id="userAvatar">·</span>
+            <span class="user-email" id="userEmail">—</span>
+          </div>
+          <button class="link-btn" id="signOutBtn">ログアウト</button>
+        </div>
+
+        <div class="history-wrap">
+          <div class="history-header">
+            <span class="panel-title">履歴</span>
+            <span class="history-count" id="historyCount"></span>
+          </div>
+          <ul class="history-list" id="historyList">
+            <li class="history-empty">読み込み中...</li>
+          </ul>
+        </div>
       </div>
 
-      <div class="buttons" id="defaultButtons">
-        <button id="setBtn" class="btn primary">
-          <span class="btn-label">セット</span>
-        </button>
-        <button id="clearBtn" class="btn ghost">
-          <span class="btn-label">解除</span>
-        </button>
+      <!-- 設定不備 -->
+      <div class="panel-section panel-warn" id="configWarn" hidden>
+        <span class="warn-icon">⚠</span>
+        <div>
+          <div class="panel-title">Supabase 未設定</div>
+          <p class="panel-sub-text">
+            <code>config.js</code> に Supabase の URL と anon key を設定してください。
+            <a
+              href="https://github.com/hnmnaoya-max/simple-alarm-clock#supabase-setup"
+              target="_blank"
+              rel="noopener"
+              >セットアップ手順</a
+            >
+          </p>
+        </div>
       </div>
+    </aside>
+  </div>
 
-      <div class="buttons ringing-buttons" id="ringingButtons" hidden>
-        <button id="snoozeBtn" class="btn snooze">
-          <span class="btn-label">スヌーズ 5分</span>
-        </button>
-        <button id="stopBtn" class="btn stop">
-          <span class="btn-label">停止</span>
-        </button>
-      </div>
-    </section>
-
-    <footer class="status-wrap">
-      <span class="status-pill" id="status">
-        <span class="status-led"></span>
-        <span class="status-text">アラーム未設定</span>
-      </span>
-    </footer>
-  </main>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="config.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
